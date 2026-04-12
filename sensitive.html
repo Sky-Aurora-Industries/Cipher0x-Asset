@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CIPHER0X | SENSITIVE AREA</title>
+    <style>
+        body { background: #000; color: #f00; font-family: 'Courier New', monospace; padding: 20px; text-align: center; }
+        .vault-box { border: 2px solid #f00; padding: 30px; max-width: 500px; margin: 50px auto; background: rgba(15,0,0,0.9); box-shadow: 0 0 30px #f00; }
+        input { background: #000; border: 1px solid #f00; color: #0f0; padding: 12px; width: 85%; text-align: center; margin-bottom: 20px; outline: none; font-size: 1.2rem; }
+        .btn-auth { background: #f00; color: #000; border: none; padding: 10px 30px; font-weight: bold; cursor: pointer; letter-spacing: 2px; }
+        #vault-content { display: none; margin-top: 30px; text-align: left; }
+        .file-card { background: #111; border: 1px solid #f00; padding: 20px; margin-bottom: 15px; border-left: 10px solid #f00; }
+        .dl-link { color: #fff; background: #f00; padding: 8px 15px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div id="auth-area" class="vault-box">
+        <h2 style="letter-spacing: 5px;">[ SENSITIVE AREA ]</h2>
+        <p style="color: #888;">PASSCODE REQUIRED</p>
+        <input type="password" id="passInput" placeholder="ENTER KEY">
+        <br>
+        <button class="btn-auth" onclick="verify()">ACCESS VAULT</button>
+    </div>
+
+    <div id="vault-content" class="vault-box" style="max-width: 600px;">
+        <h2 style="color: #0f0; letter-spacing: 3px;">[ VAULT UNLOCKED ]</h2>
+        
+        <div class="file-card">
+            <strong style="color: #fff; font-size: 1.1rem;">SHADOW_ASSET_18MB.sqlite</strong><br>
+            <span style="color: #888;">Size: 17.91 MB | Format: Database Core</span><br>
+            <a href="SHADOW_ASSET_18MB.sqlite" class="dl-link" download>FORCE EXTRACT</a>
+        </div>
+
+        <div class="file-card">
+            <strong style="color: #fff; font-size: 1.1rem;">system_config_v2.sql</strong><br>
+            <span style="color: #888;">Size: 4.66 MB | Target: svn.itools.de</span><br>
+            <a href="system_config_v2.sql" class="dl-link" download>FORCE EXTRACT</a>
+        </div>
+
+        <a href="index.html" style="color: #fff; text-decoration: none; font-size: 0.8rem; border-bottom: 1px solid #fff;">[ EXIT VAULT ]</a>
+    </div>
+
+    <script>
+        function verify() {
+            const p = document.getElementById('passInput').value;
+            if(p === "sky-aurora-99") {
+                document.getElementById('auth-area').style.display = 'none';
+                document.getElementById('vault-content').style.display = 'block';
+            } else { alert("ACCESS DENIED!"); }
+        }
+    </script>
+</body>
+</html>
