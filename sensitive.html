@@ -11,32 +11,31 @@
             overflow: hidden;
             background-color: #000;
             font-family: 'Courier New', monospace;
-            color: #f00; /* Teks Sensitive Merah */
+            color: #f00;
         }
         
-        /* 1. Gambar Latar Gelap (Brightness 20%) & Kedap-kedip Guntur */
+        /* Gambar Latar Kedap-kedip Guntur */
         .bg-overlay {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: url('data_png.png') no-repeat center center;
+            background: url('data_.png') no-repeat center center;
             background-size: cover;
+            filter: brightness(15%) contrast(120%);
             z-index: 0;
-            animation: flickeringGuntur 8s infinite;
+            animation: guntur_blitz 7s infinite;
         }
 
-        /* Animasi Blitz Guntur & Gelap Total */
-        @keyframes flickeringGuntur {
-            0%, 90%, 100% { filter: brightness(20%) contrast(100%); opacity: 1; }
-            93% { filter: brightness(150%) contrast(180%); opacity: 0.8; } /* Blitz Guntur Merah Putih */
-            95% { filter: brightness(20%) contrast(100%); opacity: 1; }
-            97% { filter: brightness(120%) contrast(140%); opacity: 0.9; } /* Blitz Kecil */
+        @keyframes guntur_blitz {
+            0%, 92%, 100% { filter: brightness(15%) contrast(120%); }
+            94% { filter: brightness(200%) contrast(150%); } 
+            96% { filter: brightness(15%) contrast(120%); }
+            98% { filter: brightness(150%) contrast(130%); }
         }
 
-        /* 2. Huruf Matrix Merah Berjatuhan (Canvas) */
-        canvas { position: fixed; top: 0; left: 0; z-index: 1; opacity: 0.6; }
+        /* Huruf Matrix Merah Berjatuhan */
+        canvas { position: fixed; top: 0; left: 0; z-index: 1; opacity: 0.5; }
 
-        /* Container Login/Vault di tengah */
         .main-container {
             position: relative;
             z-index: 4;
@@ -48,53 +47,38 @@
             text-align: center;
         }
 
-        /* Box Login Mencekam */
-        .vault-box {
-            border: 3px solid #f00; /* Border Merah Menyala */
-            padding: 40px;
-            max-width: 500px;
-            background: rgba(15, 0, 0, 0.95); /* Hitam Kemerahan Pekat */
-            box-shadow: 0 0 30px #f00, inset 0 0 20px #f00; /* Glow Luar Dalam */
-            animation: glitchBorder 1s infinite;
-        }
-
-        @keyframes glitchBorder {
-            0% { border-color: #f00; box-shadow: 0 0 30px #f00; }
-            50% { border-color: #ff3333; box-shadow: 0 0 40px #ff3333; }
-            100% { border-color: #f00; box-shadow: 0 0 30px #f00; }
-        }
-
-        input {
-            background: #000;
+        .login-box {
             border: 2px solid #f00;
-            color: #f00;
-            padding: 15px;
-            width: 85%;
-            text-align: center;
-            margin-bottom: 25px;
-            outline: none;
-            font-size: 1.3rem;
-            font-weight: bold;
-            letter-spacing: 5px;
+            padding: 30px;
+            max-width: 500px;
+            background: rgba(10, 0, 0, 0.9);
+            box-shadow: 0 0 25px #f00;
         }
 
-        .btn-auth {
-            background: #f00; /* Merah */
-            color: #000;
-            border: none;
-            padding: 15px 35px;
-            font-weight: bold;
-            cursor: pointer;
-            letter-spacing: 3px;
-            font-size: 1.1rem;
-            transition: 0.3s;
+        input[type="password"] {
+            background: #000; border: 1px solid #f00; color: #f00;
+            padding: 10px; width: 80%; text-align: center; margin-bottom: 20px;
         }
-        .btn-auth:hover { background: #fff; box-shadow: 0 0 20px #fff; }
 
-        #vault-content { display: none; text-align: left; max-width: 600px; margin-top: 30px; }
-        .file-card { background: rgba(20,0,0,0.8); border: 1px solid #f00; padding: 20px; border-left: 10px solid #f00; margin-bottom: 15px; position: relative; }
-        .dl-link { color: #fff; background: #f00; padding: 8px 15px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 10px; font-size: 0.9rem; }
-        .dl-link:hover { background: #000; color:#f00; }
+        .auth-btn {
+            background: #f00; border: none; color: #000;
+            padding: 10px 25px; cursor: pointer; font-weight: bold;
+        }
+
+        /* Style Card File */
+        .file-card { 
+            background: rgba(30, 0, 0, 0.8); 
+            border: 1px solid #f00; 
+            padding: 15px; 
+            margin-bottom: 10px; 
+            text-align: left;
+        }
+
+        .download-now { 
+            color: #fff; background: #f00; 
+            padding: 5px 10px; text-decoration: none; 
+            font-size: 0.8rem; display: inline-block; margin-top: 5px;
+        }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -103,68 +87,58 @@
     <canvas id="matrix"></canvas>
 
     <div class="main-container">
-        <div id="auth-area" class="vault-box">
-            <h1 style="color: #fff; text-shadow: 0 0 10px #f00; letter-spacing: 5px; font-size: 2.5rem; margin-bottom: 5px;">[ SENSITIVE ]</h1>
-            <p style="color: #888; font-size: 0.8rem; margin-bottom: 30px;">AUTHORIZATION KEY REQUIRED</p>
-            
-            <input type="password" id="passInput" placeholder="********">
+        <div id="login-area" class="login-box">
+            <h2 style="letter-spacing: 5px;">[ SENSITIVE AREA ]</h2>
+            <input type="password" id="passInput" placeholder="ENTER CODE">
             <br>
-            <button class="btn-auth" onclick="verify()">DECRYPT_VAULT</button>
+            <button class="auth-btn" onclick="checkAuth()">DECRYPT</button>
         </div>
 
-        <div id="vault-content" class="vault-box" style="padding: 20px;">
-            <h2 style="color: #0f0; letter-spacing: 3px; border-bottom: 2px dashed #333; padding-bottom: 10px;">[ ACCESS GRANTED ]</h2>
-            <p style="color:#fff; font-size: 0.8rem; margin-top: 0;">Welcome, Operator King Sky. All assets are available for extraction.</p>
+        <div id="secret-assets" class="login-box" style="display: none;">
+            <h3 style="color: #0f0;">[ ACCESS GRANTED: 2 FILES ]</h3>
             
             <div class="file-card">
-                <strong style="color: #fff; font-size: 1.1rem;">shadow_asset_18.sqlite</strong><br>
-                <span style="color: #888;">Format: SQLite DB | Size: 17.91 MB | Source: EXTERNAL_BREACH</span><br>
-                <a href="SHADOW_ASSET_18MB.sqlite" class="dl-link" download>FORCE_EXTRACT</a>
+                <strong>shadow_asset_18.sql</strong><br>
+                <small style="color: #888;">Size: 18.78 MB | Status: Uploaded</small><br>
+                <a href="shadow_asset_18.sql" class="download-now" download>FORCE EXTRACT</a>
             </div>
 
             <div class="file-card">
-                <strong style="color: #fff; font-size: 1.1rem;">system_config_v2.sql</strong><br>
-                <span style="color: #888;">Format: SQL DUMP | Size: 4.66 MB | Source: svn.itools.de</span><br>
-                <a href="system_config_v2.sql" class="dl-link" download>FORCE_EXTRACT</a>
+                <strong>system_config_v2.sql</strong><br>
+                <small style="color: #888;">Size: 4.66 MB | Target: itools.de</small><br>
+                <a href="system_config_v2.sql" class="download-now" download>FORCE EXTRACT</a>
             </div>
 
-            <a href="index.html" style="color: #fff; text-decoration: none; font-size: 0.8rem; border-bottom: 1px solid #fff;">[ EXIT VAULT ]</a>
+            <a href="index.html" style="color: #fff; font-size: 0.7rem;">[ EXIT ]</a>
         </div>
     </div>
 
     <script>
-        // Matrix Rain (Hacking Effect)
+        // Logic Matrix
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        // Huruf & Kode Acak (Hanya Merah)
-        const chars = "01010101ABCDEF@!#%&";
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const chars = "010101ABCDEF";
         const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
+        const drops = Array(Math.floor(canvas.width/fontSize)).fill(1);
         function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Trails
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#f00"; // Warna Teks (Sensitive = Merah)
-            ctx.font = fontSize + "px monospace";
+            ctx.fillStyle = "rgba(0,0,0,0.1)"; ctx.fillRect(0,0,canvas.width,canvas.height);
+            ctx.fillStyle = "#f00";
             drops.forEach((y, i) => {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                ctx.fillText(text, i * fontSize, y * fontSize);
-                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                ctx.fillText(chars[Math.floor(Math.random()*chars.length)], i*fontSize, y*fontSize);
+                if(y*fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             });
         }
         setInterval(draw, 35);
 
-        // Verification Logic
-        function verify() {
-            const p = document.getElementById('passInput').value;
-            // Password yang lo bikin sebelumnya
-            if(p === "Talaud2026") {
-                document.getElementById('auth-area').style.display = 'none';
-                document.getElementById('vault-content').style.display = 'block';
-            } else { alert("WRONG PASSCODE: SESSION TERMINATED"); }
+        // Logic Login
+        function checkAuth() {
+            const pass = document.getElementById('passInput').value;
+            if (pass === "Talaud2026") {
+                document.getElementById('login-area').style.display = 'none';
+                document.getElementById('secret-assets').style.display = 'block';
+            }
         }
     </script>
 </body>
