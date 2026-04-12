@@ -3,43 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CIPHER0X | PORTAL</title>
+    <title>CIPHER0X | SELECTION</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: 'Courier New', monospace; }
         
-        /* Background Gambar logo_hack.png */
+        /* Background Gambar lo */
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('logo_hack.png') no-repeat center center;
             background-size: cover;
-            filter: brightness(35%); /* Bikin agak gelap */
+            filter: brightness(30%);
             z-index: 0;
-            animation: lightning 6s infinite;
+            animation: lightning 5s infinite;
         }
 
-        /* Efek Guntur Kedap-Kedip */
         @keyframes lightning {
-            0%, 95%, 100% { filter: brightness(35%); }
-            97% { filter: brightness(150%) contrast(120%); }
-            98% { filter: brightness(40%); }
-            99% { filter: brightness(180%); }
+            0%, 95%, 100% { filter: brightness(30%); }
+            97% { filter: brightness(130%) contrast(120%); }
+            99% { filter: brightness(150%); }
         }
 
-        canvas { position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.7; }
+        canvas { position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.6; }
 
-        .content {
+        .container {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            z-index: 2; text-align: center; font-family: 'Courier New', monospace;
+            z-index: 2; text-align: center; width: 100%;
         }
 
-        .enter-btn {
-            padding: 15px 30px; border: 2px solid #0f0; color: #0f0;
-            text-decoration: none; font-weight: bold; font-size: 1.2rem;
-            background: rgba(0,0,0,0.5); letter-spacing: 5px;
-            transition: 0.3s; cursor: pointer;
+        .header-text { color: #fff; letter-spacing: 10px; font-size: 2rem; margin-bottom: 50px; text-shadow: 0 0 10px #0f0; }
+
+        .menu-wrapper { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+
+        .gate {
+            padding: 20px 40px; border: 2px solid #0f0; color: #0f0;
+            text-decoration: none; font-weight: bold; font-size: 1rem;
+            background: rgba(0,0,0,0.7); letter-spacing: 3px;
+            transition: 0.4s; cursor: pointer; min-width: 200px;
         }
 
-        .enter-btn:hover { background: #0f0; color: #000; box-shadow: 0 0 20px #0f0; }
+        /* Styling khusus buat Sensitive */
+        .gate-sensitive { border-color: #f00; color: #f00; }
+        .gate-sensitive:hover { background: #f00; color: #000; box-shadow: 0 0 30px #f00; }
+
+        /* Styling khusus buat Umum */
+        .gate-public { border-color: #0f0; color: #0f0; }
+        .gate-public:hover { background: #0f0; color: #000; box-shadow: 0 0 30px #0f0; }
+
+        .status-log { margin-top: 50px; color: #fff; font-size: 0.8rem; opacity: 0.5; }
     </style>
 </head>
 <body>
@@ -47,8 +57,19 @@
     <div class="bg-overlay"></div>
     <canvas id="matrix"></canvas>
 
-    <div class="content">
-        <a href="archives_level_01.html" class="enter-btn">[ INITIALIZE ACCESS ]</a>
+    <div class="container">
+        <div class="header-text">CHOOSE YOUR PATH</div>
+        
+        <div class="menu-wrapper">
+            <a href="archives_level_01.html" class="gate gate-public">[ PUBLIC DATA ]</a>
+            
+            <a href="blackbox_secret_99.html" class="gate gate-sensitive">[ SENSITIVE DATA ]</a>
+        </div>
+
+        <div class="status-log">
+            > SYSTEM: ONLINE<br>
+            > GATEWAY: CIPHER0X-ASSET V.2.0
+        </div>
     </div>
 
     <script>
@@ -57,7 +78,7 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const chars = "01010101010101"; // Cuma angka 01 biar lebih hacker
         const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
