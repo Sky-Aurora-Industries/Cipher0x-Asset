@@ -2,24 +2,123 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CIPHER0X | DATA UMUM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURORA | PUBLIC DATA</title>
     <style>
-        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; padding: 40px; text-align: center; }
-        .container { max-width: 600px; margin: auto; border: 1px solid #333; background: #050505; padding: 20px; box-shadow: 0 0 15px #0f0; }
-        .file-card { border-bottom: 1px solid #222; padding: 15px; text-align: left; }
-        .btn-back { display: inline-block; margin-top: 20px; color: #fff; text-decoration: none; border: 1px solid #fff; padding: 10px 20px; }
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: 'Courier New', monospace;
+            color: #0f0; /* Teks Umum Hijau */
+        }
+        
+        /* 1. Gambar Latar Gelap & Kedap-kedip Guntur (Flicker Hijau) */
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            /* Pastiin nama file gambar di sini sama dengan di repo lo */
+            background: url('data_.png') no-repeat center center;
+            background-size: cover;
+            filter: brightness(20%) contrast(110%);
+            z-index: 0;
+            animation: guntur_flicker_green 9s infinite;
+        }
+
+        @keyframes guntur_flicker_green {
+            0%, 85%, 100% { filter: brightness(20%) contrast(110%); }
+            88% { filter: brightness(180%) contrast(160%); } /* Blitz Petir Hijau-Putih */
+            90% { filter: brightness(20%) contrast(110%); }
+            92% { filter: brightness(130%) contrast(130%); } /* Blitz Kecil */
+            95% { filter: brightness(20%) contrast(110%); }
+        }
+
+        /* 2. Huruf Acak Matrix Hijau Berjatuhan (Canvas) */
+        canvas { position: fixed; top: 0; left: 0; z-index: 1; opacity: 0.6; }
+
+        /* Container di tengah */
+        .main-container {
+            position: relative;
+            z-index: 4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Box Data Sanggar */
+        .archive-box {
+            border: 3px solid #0f0; /* Border Hijau Menyala */
+            padding: 40px;
+            max-width: 600px;
+            background: rgba(0, 10, 0, 0.95); /* Hitam Kehijauan Pekat */
+            box-shadow: 0 0 30px #0f0, inset 0 0 20px #0f0; /* Glow Hijau */
+        }
+
+        h2 { color: #fff; text-shadow: 0 0 10px #0f0; letter-spacing: 5px; margin-bottom: 30px; }
+
+        .file-list { text-align: left; margin-bottom: 20px; }
+        .file-card { background: rgba(0, 20, 0, 0.8); border: 1px solid #0f0; padding: 20px; border-left: 10px solid #0f0; margin-bottom: 15px; }
+        
+        .download-now { color: #000; background: #0f0; padding: 8px 15px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 10px; }
+        .download-now:hover { background: #fff; }
+
+        .btn-back { display: inline-block; margin-top: 30px; color: #fff; text-decoration: none; border: 1px solid #fff; padding: 10px 20px; font-size: 0.9rem; letter-spacing: 2px; }
+        .btn-back:hover { background: #fff; color: #000; box-shadow: 0 0 20px #fff; }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h2>[ PUBLIC DATA ARCHIVE ]</h2>
-        <div class="file-card">
-            <strong>Public_Intel_Report_01.txt</strong><br>
-            <span style="color: #888;">Status: Decrypted | Size: 1.2 KB</span><br>
-            <a href="#" style="color: yellow;">[ DOWNLOAD ]</a>
+<body oncontextmenu="return false;">
+
+    <div class="bg-overlay"></div>
+
+    <canvas id="matrix"></canvas>
+
+    <div class="main-container">
+        <div class="archive-box">
+            <h2>[ PUBLIC DATA ]</h2>
+            <p style="color: #fff; font-size: 0.8rem; margin-bottom: 20px;">ACCESS: PUBLIC | INTEGRITY: VERIFIED</p>
+            
+            <div class="file-list">
+                <div class="file-card">
+                    <strong>Public_Intel_Report_01.txt</strong><br>
+                    <span style="color: #888;">Size: 1.2 KB | Status: CLEAN</span><br>
+                    <a href="#" class="download-now">DOWNLOAD_INTEL</a>
+                </div>
+                
+                <p style="font-size: 0.7rem; color: #333;">> Multi-Asset Stream: DEACTIVATED<br>> Encryption: LEVEL 0</p>
+            </div>
+            
+            <a href="index.html" class="btn-back">[ RETURN TO HOME ]</a>
         </div>
-        <a href="index.html" class="btn-back">BACK TO HOME</a>
     </div>
+
+    <script>
+        // Matrix Rain (Public Effect)
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        // Huruf & Kode Acak (Hijau Standar)
+        const chars = "010101";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+        function draw() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Trails
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#0f0"; // Warna Teks (Public = Hijau)
+            ctx.font = fontSize + "px monospace";
+            drops.forEach((y, i) => {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, y * fontSize);
+                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            });
+        }
+        setInterval(draw, 35);
+    </script>
 </body>
 </html>
-
