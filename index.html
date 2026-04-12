@@ -3,106 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CIPHER0X | FIREWALL ACTIVE</title>
+    <title>CIPHER0X | GLOBAL DOMINATION</title>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: 'Courier New', monospace; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: 'Courier New', monospace; color: #0f0; }
         
+        /* Background Gambar lo */
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('logo_hack.png') no-repeat center center;
-            background-size: cover; filter: brightness(20%); z-index: 0;
-            animation: lightning 4s infinite;
+            background-size: cover; filter: brightness(15%); z-index: 0;
+            animation: lightning 5s infinite;
         }
-
         @keyframes lightning {
-            0%, 90%, 100% { filter: brightness(20%); }
-            95% { filter: brightness(100%) contrast(150%); }
+            0%, 90%, 100% { filter: brightness(15%); }
+            95% { filter: brightness(120%) contrast(150%); }
         }
 
-        canvas { position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.5; }
+        canvas { position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.4; }
 
-        /* Layar Firewall */
-        #firewall-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9999; display: flex;
-            flex-direction: column; align-items: center; justify-content: center;
-            color: #0f0; text-align: center;
+        /* Container Utama */
+        .main-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 4; text-align: center; padding: 20px; box-sizing: border-box;
         }
 
-        .loader {
-            border: 2px solid #333; border-top: 2px solid #0f0;
-            border-radius: 50%; width: 50px; height: 50px;
-            animation: spin 1s linear infinite; margin-bottom: 20px;
+        /* Glitch Title */
+        .glitch-title {
+            color: #fff; font-size: 4rem; font-weight: bold; letter-spacing: 20px;
+            text-shadow: 3px 3px #f00, -3px -3px #00f; animation: glitch 1s infinite;
+            margin-bottom: 5px;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-4px, 4px); }
+            40% { transform: translate(-4px, -4px); }
+            60% { transform: translate(4px, 4px); }
+            80% { transform: translate(4px, -4px); }
+            100% { transform: translate(0); }
         }
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .status-bar { color: #fff; letter-spacing: 5px; font-weight: bold; margin-bottom: 40px; }
 
-        .container { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 4; text-align: center; width: 100%; }
-        .glitch-title { color: #fff; font-size: 3.5rem; font-weight: bold; letter-spacing: 15px; text-shadow: 2px 2px #f00, -2px -2px #00f; }
-        .btn { padding: 15px 35px; border: 1px solid #0f0; color: #0f0; text-decoration: none; font-weight: bold; background: rgba(0,0,0,0.8); margin: 10px; display: inline-block; cursor: pointer; }
-        .btn:hover { background: #0f0; color: #000; }
-        .btn-red { border-color: #f00; color: #f00; }
+        /* Dua Menu Utama */
+        .menu-wrapper { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-bottom: 50px; }
+        .btn {
+            padding: 18px 40px; border: 2px solid #0f0; color: #0f0;
+            text-decoration: none; font-weight: bold; background: rgba(0,0,0,0.9);
+            transition: 0.3s; cursor: pointer; display: inline-block;
+            font-size: 1.1rem; letter-spacing: 5px;
+        }
+        .btn:hover { background: #0f0; color: #000; box-shadow: 0 0 30px #0f0; }
+        .btn-red { border-color: #f00; color: #f00; text-shadow: 0 0 10px #f00; }
+        .btn-red:hover { background: #f00; color: #000; box-shadow: 0 0 30px #f00; }
+
+        /* AREA LIVE FEED (BUKTI KEKUASAAN) */
+        .live-feed-box {
+            width: 90%; max-width: 800px; height: 250px;
+            background: rgba(10, 10, 10, 0.9); border: 1px solid #333;
+            border-top: 5px solid #0f0; box-shadow: 0 0 50px rgba(0, 255, 0, 0.1);
+            text-align: left; padding: 15px; box-sizing: border-box;
+            overflow: hidden; position: relative;
+        }
+        .feed-header { border-bottom: 1px dashed #333; padding-bottom: 10px; margin-bottom: 15px; color: #fff; font-weight: bold; }
+        .feed-content { font-size: 0.8rem; color: #0f0; text-shadow: 0 0 3px #0f0; }
+        .feed-line { margin-bottom: 5px; display: block; white-space: nowrap; overflow: hidden; }
+
+        /* Animasi Komen Berjalan */
+        .feed-scroll { animation: feedScroll 20s linear infinite; }
+        @keyframes feedScroll {
+            0% { transform: translateY(0%); }
+            100% { transform: translateY(-100%); }
+        }
+
     </style>
 </head>
-<body>
-
-    <div id="firewall-screen">
-        <div class="loader"></div>
-        <h2 id="fw-status">FIREWALL: INITIALIZING SCAN...</h2>
-        <p id="fw-details">Checking browser integrity & bot signatures...</p>
-    </div>
-
-    <div class="bg-overlay"></div>
+<body oncontextmenu="return false;"> <div class="bg-overlay"></div>
     <canvas id="matrix"></canvas>
 
-    <div class="container" id="main-content">
+    <div class="main-container">
         <div class="glitch-title">CIPHER0X</div>
-        <p style="color:#0f0;">CIPHER0X-WAF: <span style="color:#fff;">VERIFIED</span></p>
+        <div class="status-bar">> OPERATOR: KING SKY | SYSTEM: SHIELD ACTIVE <</div>
+        
         <div class="menu-wrapper">
-            <a href="archives_level_01.html" class="btn">[ ARCHIVE ]</a>
-            <a href="blackbox_secret_99.html" class="btn btn-red">[ VAULT ]</a>
+            <a href="archives_level_01.html" class="btn btn-red">[ DATA SENSITIVE ]</a>
+            <a href="archives_level_01.html" class="btn">[ DATA UMUM ]</a>
+        </div>
+
+        <div class="live-feed-box">
+            <div class="feed-header">> LIVE CORE SCAN: system_config_v2.sql <span style="float:right;color:yellow;">[DUMPING...]</span></div>
+            <div class="feed-content">
+                <div class="feed-scroll" id="liveFeed">
+                    <span class="feed-line">> Connecting to svn.itools.de (DE)... [DONE]</span>
+                    <span class="feed-line">> Bypassing Firewall... [SUCCESS]</span>
+                    <span class="feed-line">> Scanning Database Tables... [3,421 FOUND]</span>
+                    <span class="feed-line">> Table: 'intel_reports_v4' | Entry: Report_ID: GER_BM_99... [DECRYPTED]</span>
+                    <span class="feed-line">> Extracting GPS: 51.5074° N, 0.1278° W... [LOGGED]</span>
+                    <span class="feed-line">> Dumping: Germany_BioMap_Dump_2025... [4.66MB SAVED]</span>
+                    <span class="feed-line">> Target: system_config_v2.sql | Hash: AES-256... [SECURED IN VAULT]</span>
+                    <span class="feed-line">> Analyzing... [WARNING: Confidential Data Breach Detected]</span>
+                    <span class="feed-line">> CIPHER0X: *Professional Asset Management*</span>
+                    <span class="feed-line">> Trace: Encrypted via Tunneled Proxy</span>
+                    <span class="feed-line">> WELCOME, USER. YOU ARE VIEWING LIVE DATA STREAM.</span>
+                    <span class="feed-line">> Connecting to svn.itools.de (DE)... [DONE]</span>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // FIREWALL LOGIC (LOGIC GATE)
-        window.onload = function() {
-            const status = document.getElementById('fw-status');
-            const details = document.getElementById('fw-details');
-            const screen = document.getElementById('firewall-screen');
-            const content = document.getElementById('main-content');
-
-            // 1. Cek User Agent (Bot Detection)
-            const isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
-            
-            setTimeout(() => {
-                if (isBot) {
-                    status.innerText = "ACCESS DENIED";
-                    status.style.color = "red";
-                    details.innerText = "Malicious Bot Signature Detected. IP Logged.";
-                } else {
-                    status.innerText = "FIREWALL: PASS";
-                    details.innerText = "Integrity Verified. Welcome, Human.";
-                    setTimeout(() => {
-                        screen.style.display = 'none';
-                        content.style.display = 'block';
-                    }, 1000);
-                }
-            }, 2000);
-        };
-
-        // Anti-Inspect Element
-        document.onkeydown = function(e) {
-            if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
-                return false;
-            }
-        };
-
         // Matrix Effect
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const chars = "01";
+        const chars = "0101010101010101ABCDEF@";
         const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
