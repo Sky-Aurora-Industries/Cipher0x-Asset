@@ -73,26 +73,6 @@
         function draw() { ctx.fillStyle = "rgba(0,0,0,0.1)"; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.fillStyle = "#0f0";
             drops.forEach((y, i) => { ctx.fillText(Math.floor(Math.random()*2), i*16, y*16); if(y*16 > canvas.height && Math.random() > 0.975) drops[i] = 0; drops[i]++; });
         } setInterval(draw, 35);
-
-<!-- Aurora Lite Chat Interface -->
-<div id="aurora-chat" style="position:fixed; bottom:20px; right:20px; width:300px; background:#000; border:1px solid #0f0; padding:10px;">
-    <div id="chat-box" style="height:150px; overflow-y:scroll; color:#0f0; font-family:monospace; margin-bottom:10px;">
-        Aurora Lite: Siapa lo? Mau tanya apa di lab gue?
-    </div>
-    <input type="text" id="chat-input" placeholder="Tanya sesuatu..." style="width:100%; background:#000; color:#0f0; border:1px solid #0f0;">
-</div>
-
-<script>
-    document.getElementById('chat-input').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            let userMsg = this.value;
-            let chatBox = document.getElementById('chat-box');
-            chatBox.innerHTML += "<br>> " + userMsg;
-            // Di sini nanti lo bisa sambungin ke backend AI lo
-            chatBox.innerHTML += "<br>Aurora: Lo tanya: '" + userMsg + "'? Pertanyaan sampah. Keluar dari sini sebelum sistem gue nge-purge IP lo.";
-            this.value = '';
-        }
-    });       
     </script>
 </body>
 </html>
